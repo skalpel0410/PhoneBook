@@ -1,6 +1,8 @@
 public class PhoneBook {
 
     public static void main(String[] args) {
+        String[][] book = new String[1000][2];
+
         //Добавить считывание ввода пользователя в цикле
     }
 
@@ -25,6 +27,8 @@ public class PhoneBook {
     }
 
     public static void list(String[][] book) {
-        //print phone book
+        for (int i = 0; i < book.length; i++) {
+            System.out.println(book[i][0].substring(book[i][1].indexOf(" ")+1,book[i][0].lastIndexOf(" ")-1) + ":" + book[i][1]);
+        }
     }
 }
