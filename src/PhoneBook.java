@@ -1,8 +1,24 @@
+import java.util.Scanner;
+
 public class PhoneBook {
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         String[][] book = new String[1000][2];
-
+        boolean isCorrectName = false;
+        while (true) {
+            //цикл ввода имени
+            while (!isCorrectName) {
+                String name = scanner.nextLine(); //Считывает строку из System.in
+                isCorrectName = checkName(name);
+                if (!isCorrectName) {
+                    System.out.println("Введите корректное имя!");
+                } else {
+                    name = (formatName(name));
+                }
+            }
+            //цикл ввода телефона
+        }
         //Добавить считывание ввода пользователя в цикле
     }
 
@@ -15,7 +31,19 @@ public class PhoneBook {
     }
 
     public static String formatName(String name) {
-        return "";
+        tring[] words = name.trim().split(" ");
+        sortByLength(words);
+        String result = "";
+        for (int i = 0; i < words.length; i++) {
+            String str = words[i];
+            char firstChar = str.charAt(0);
+            if (!Character.isUpperCase(firstChar)) {
+                result += Character.toUpperCase(firstChar) + str.substring(1) + " ";
+            } else {
+                result += str + "";
+            }
+        }
+        return result;
     }
 
     public static String formatPhoneNumber(String number) {
