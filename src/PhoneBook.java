@@ -6,12 +6,14 @@ public class PhoneBook {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String[][] book = new String[1][2];
-        int count = 0;
+        boolean isCorrectName = false;
+        boolean isCorrectNumber = false;
+        boolean isExist = false;
 
         while (true) {
-            boolean isCorrectName = false;
-            boolean isCorrectNumber = false;
-            boolean isExist = false;
+            isCorrectName = false;
+            isCorrectNumber = false;
+            isExist = false;
             //цикл ввода имени
             while (!isCorrectName) {
                 System.out.println("Введите ФИО");
@@ -34,12 +36,11 @@ public class PhoneBook {
                                 System.out.println("Введите корректный номер!");
                             } else {
                                 phoneNumber = formatNumber(phoneNumber);
-                                add(book, name, phoneNumber, count);
-                                System.out.println("запись добавлена: " + book[count][0] +" " + book[count][1]);
+                                add(book, name, phoneNumber);
+                                System.out.println("запись добавлена: " + book[book.length - 1][0] + " " + book[book.length - 1][1]);
                                 list(book);
-                                book = Arrays.copyOf(book, book.length+1);
-                                book[book.length-1] = new String[2];
-                                count++;
+                                book = Arrays.copyOf(book, book.length + 1);
+                                book[book.length - 1] = new String[2];
                             }
                         }
                     }
@@ -96,22 +97,25 @@ public class PhoneBook {
         return result;
     }
 
-    public static void add(String[][] book, String name, String phoneNumber, int count) { //добавление записи в базу
-        book[count][0] = name;
-        book[count][1] = phoneNumber;
+    public static void add(String[][] book, String name, String phoneNumber) { //добавление записи в базу
+        book[book.length - 1][0] = name;
+        book[book.length - 1][1] = phoneNumber;
     }
 
     public static void list(String[][] book) { //вывод базы телефонов
+        String[] flat = new String[book.length];
         for (int i = 0; i < book.length; i++) {
-            System.out.println(book[i][0] + ": " + book[i][1]);
+            flat[i] = book[i][0] + ": " + book[i][1];
+        }
+        Arrays.sort(flat);
+        for (int i = 0; i < flat.length; i++) {
+            System.out.println(flat[i]);
         }
     }
 
     private static String formatNumber(String phoneNumber) { //форматирование телефонного номера
         String clean = phoneNumber.replaceAll("[^0-9]", "");
-        String result = "+7" + " " + clean.substring(1, 4) + " " +
+        return "+7" + " " + clean.substring(1, 4) + " " +
                 clean.substring(4, 7) + " " + clean.substring(7, 9) + " " + clean.substring(9);
-
-        return result;
     }
 }
