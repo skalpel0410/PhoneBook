@@ -1,10 +1,11 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class PhoneBook {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String[][] book = new String[1000][2];
+        String[][] book = new String[1][2];
         int count = 0;
 
         while (true) {
@@ -15,10 +16,6 @@ public class PhoneBook {
             while (!isCorrectName) {
                 System.out.println("Введите ФИО");
                 String name = scanner.nextLine(); //Считывает строку из System.in
-                if (name =="list"){
-                    list(book);
-                    break;
-                }
                 isCorrectName = checkName(book, name);
                 isExist = existName(book, formatName(name));
                 if (!isExist) {//если имя не найдено
@@ -40,12 +37,14 @@ public class PhoneBook {
                                 add(book, name, phoneNumber, count);
                                 System.out.println("запись добавлена: " + book[count][0] +" " + book[count][1]);
                                 list(book);
+                                book = Arrays.copyOf(book, book.length+1);
+                                book[book.length-1] = new String[2];
                                 count++;
                             }
                         }
                     }
                 } else {//если имя найдено
-                    System.out.println("Абонент уже есть в базе. Его телефон:" + findPhoneByName(book, name));
+                    System.out.println("Абонент уже есть в базе. Его телефон:" + findPhoneByName(book, formatName(name)));
                 }
             }
         }
@@ -55,7 +54,7 @@ public class PhoneBook {
     private static String findPhoneByName(String[][] book, String name) { //поиск номера в базе по имени (первое вхождение)
         String number = "";
         for (int i = 0; i < book.length; i++) {
-            if (book[i][0] == name) {
+            if (name.equals(book[i][0])) {
                 number = book[i][1];
                 break;
             }
@@ -65,7 +64,7 @@ public class PhoneBook {
 
     private static boolean existName(String[][] book, String name) { // проверка наличия имени в базе
         for (int i = 0; i < book.length; i++) {
-            if (book[i][0] == name) {
+            if (name.equals(book[i][0])) {
                 return true;
             }
         }
@@ -104,7 +103,7 @@ public class PhoneBook {
 
     public static void list(String[][] book) { //вывод базы телефонов
         for (int i = 0; i < book.length; i++) {
-            System.out.println(book[i][0].substring(book[i][1].indexOf(" ") + 1, book[i][0].lastIndexOf(" ") - 1) + ":" + book[i][1]);
+            System.out.println(book[i][0] + ": " + book[i][1]);
         }
     }
 
