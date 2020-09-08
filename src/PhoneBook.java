@@ -9,8 +9,8 @@ public class PhoneBook {
         boolean isCorrectName = false;
         boolean isCorrectNumber = false;
         boolean isExist = false;
-
-        while (true) {
+        String input = scanner.nextLine();
+        while (!input.toLowerCase().equals("exit")) {
             isCorrectName = false;
             isCorrectNumber = false;
             isExist = false;
@@ -77,7 +77,7 @@ public class PhoneBook {
         return clean.length() == 11;
     }
 
-    public static boolean checkName(String[][] book, String name) { //проверка имени на корректность
+    public static boolean checkName(String name) { //проверка имени на корректность
         String[] words = name.trim().split(" ");
         return words.length == 3;
     }
